@@ -6,11 +6,11 @@ const AuthLayout = ({ children }) => {
         <div className="flex flex-col items-center p-2 mt-40 col-span-3 md:col-span-1 md:mb-3">
           <div className="w-11/12 md:max-w-xs">
             <h1 className="font-extrabold text-2xl primary-radiant">
-              Lorem ipsum, dolor sit amet consectetur adi.
+              Lorem ipsum, dolor sit amet consectetur
             </h1>
             <p className="text-lg secondary-radiant">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt
-              excepturi fugit?
+              Lorem ipsum dolor sit consectetur adipisicing elit. Nesciunt
+              excepturi?
             </p>
           </div>
         </div>
