@@ -32,7 +32,7 @@ const Login = () => {
           </label>
           <label className="block mb-3">
             <Link
-              to="/forget"
+              to="/auth/forget"
               className="block text-sm font-medium text-blue-500 text-right cursor-pointer"
             >
               Forgot Password ?
@@ -50,7 +50,7 @@ const Login = () => {
           <label className="block">
             <span className="block text-sm font-medium text-gray-500">
               New to CedCommerce?{" "}
-              <Link to="/signup" className="text-blue-500 cursor-pointer">
+              <Link to="/auth/signup" className="text-blue-500 cursor-pointer">
                 Create Account
               </Link>
             </span>

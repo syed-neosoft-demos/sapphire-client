@@ -3,8 +3,8 @@ import { Navigate, Route, Routes } from "react-router";
 
 const SignUp = lazy(() => import("../screen/auth/Signup"));
 const Login = lazy(() => import("../screen/auth/Login"));
-// const Forget = lazy(() => import("../pages/auth/Forget"));
-// const Reset = lazy(() => import("../pages/auth/Reset"));
+const Forget = lazy(() => import("../screen/auth/Forget"));
+const Reset = lazy(() => import("../screen/auth/Reset"));
 
 const PublicRoutes = () => {
   return (
@@ -25,7 +25,7 @@ const PublicRoutes = () => {
           </Suspense>
         }
       />
-      {/* <Route
+      <Route
         path="/forget"
         element={
           <Suspense fallback={<>Loading...</>}>
@@ -40,7 +40,7 @@ const PublicRoutes = () => {
             <Reset />
           </Suspense>
         }
-      /> */}
+      />
       <Route path="*" element={<Navigate to="/auth/login" />} />
     </Routes>
   );
