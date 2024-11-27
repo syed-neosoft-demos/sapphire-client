@@ -9,92 +9,192 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useDispatch, useSelector } from "react-redux";
+import { useFormik } from "formik";
+import { singupSchema } from "@/validations/auth-pages";
+import {
+  getDepartment,
+  getDesignation,
+  userSignup,
+} from "@/store/user/userApi";
+import toast from "react-hot-toast";
+import { useEffect, useState } from "react";
 
 const Signup = () => {
+  const [department, setDepartment] = useState();
+  const [designation, setDesignation] = useState();
+  const { user } = useSelector((store) => store);
+  const dispatch = useDispatch();
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      name: "",
+      code: "",
+      department_id: "",
+      designation_id: "",
+      password: "",
+    },
+    validationSchema: singupSchema,
+    onSubmit: async (values) => {
+      const res = await dispatch(userSignup(values));
+      if (res?.payload?.data) {
+        toast.success(res?.payload?.message);
+        formik.resetForm();
+      } else {
+        toast.error(res?.payload?.message);
+      }
+    },
+  });
+
+  const getDepartmentList = async () => {
+    const res = await dispatch(getDepartment());
+    setDepartment(res?.payload?.data?.department);
+  };
+  const getDesignationList = async () => {
+    const res = await dispatch(getDesignation());
+    setDesignation(res?.payload?.data?.designation);
+  };
+
+  useEffect(() => {
+    getDepartmentList();
+    getDesignationList();
+  }, []);
+
   return (
     <AuthLayout>
       <div className="w-11/12 md:w-2/3 bg-white shadow-2xl p-6 rounded-lg">
         <h1 className="mb-4 font-bold text-gray-700">Create an account</h1>
-        <form>
-          <label className="block mb-3">
-            <span className="form-lbl">Full Name</span>
-            <input
-              type="text"
-              placeholder="Enter name"
-              className="form-input"
-            />
-          </label>
+        <form onSubmit={formik.handleSubmit}>
           <label className="block mb-3">
             <span className="form-lbl">Email</span>
             <input
               type="text"
               placeholder="Enter mail"
               className="form-input"
+              name="email"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.email}
             />
+            {formik.touched.email && formik.errors.email && (
+              <span className="error-message">{formik.errors.email}</span>
+            )}
           </label>
+          <label className="block mb-3">
+            <span className="form-lbl">Full Name</span>
+            <input
+              type="text"
+              placeholder="Enter name"
+              className="form-input"
+              name="name"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.name}
+            />
+            {formik.touched.name && formik.errors.name && (
+              <span className="error-message">{formik.errors.name}</span>
+            )}
+          </label>
+          <label className="block mb-3">
+            <span className="form-lbl">Employee Code</span>
+            <input
+              type="text"
+              placeholder="Enter employee code"
+              className="form-input"
+              name="code"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.code}
+            />
+            {formik.touched.code && formik.errors.code && (
+              <span className="error-message">{formik.errors.code}</span>
+            )}
+          </label>
+
           <div className="flex gap-2 justify-between mt-1 mb-1">
             <div className="flex flex-col space-y-1.5 flex-1">
               <Label htmlFor="framework" className="form-lbl">
                 Department
               </Label>
-              <Select>
+              <Select
+                name="department_id"
+                onValueChange={(value) => {
+                  formik.setFieldValue("department_id", value);
+                }}
+                onBlur={formik.handleBlur}
+                value={formik.values.department_id}
+              >
                 <SelectTrigger id="framework">
                   <SelectValue placeholder="Select" />
                 </SelectTrigger>
                 <SelectContent position="popper">
-                  <SelectItem value="next">Next.js</SelectItem>
-                  <SelectItem value="sveltekit">SvelteKit</SelectItem>
-                  <SelectItem value="astro">Astro</SelectItem>
-                  <SelectItem value="nuxt">Nuxt.js</SelectItem>
+                  {department?.rows?.map((el) => (
+                    <SelectItem value={el?.id} key={el?.id}>
+                      {el?.name}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
-            </div>{" "}
+              {formik.touched.department_id && formik.errors.department_id && (
+                <span className="error-message">
+                  {formik.errors.department_id}
+                </span>
+              )}
+            </div>
             <div className="flex flex-col space-y-1.5 flex-1">
               <Label htmlFor="framework" className="form-lbl">
                 Designation
               </Label>
-              <Select>
+              <Select
+                name="designation_id"
+                onValueChange={(value) => {
+                  formik.setFieldValue("designation_id", value);
+                }}
+                onBlur={formik.handleBlur}
+                value={formik.values.designation_id}
+              >
                 <SelectTrigger id="framework">
                   <SelectValue placeholder="Select" />
                 </SelectTrigger>
                 <SelectContent position="popper">
-                  <SelectItem value="next">Next.js</SelectItem>
-                  <SelectItem value="sveltekit">SvelteKit</SelectItem>
-                  <SelectItem value="astro">Astro</SelectItem>
-                  <SelectItem value="nuxt">Nuxt.js</SelectItem>
+                  {designation?.rows?.map((el) => {
+                    return (
+                      <SelectItem value={el?.id} key={el?.id}>
+                        {el?.name}
+                      </SelectItem>
+                    );
+                  })}
                 </SelectContent>
               </Select>
+              {formik.touched.designation_id &&
+                formik.errors.designation_id && (
+                  <span className="error-message">
+                    {formik.errors.designation_id}
+                  </span>
+                )}
             </div>
           </div>
-          <label className="block mb-3">
-            <span className="form-lbl">Username</span>
-            <input
-              type="text"
-              placeholder="Enter Username"
-              className="form-input"
-            />
-          </label>
           <label className="block mb-4">
             <span className="form-lbl">Password</span>
             <input
-              type="text"
+              type="password"
               className="form-input"
               placeholder="Enter Password"
+              name="password"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.password}
             />
+            {formik.touched.password && formik.errors.password && (
+              <span className="error-message">{formik.errors.password}</span>
+            )}
           </label>
 
-          {/* <div className="flex items-center mb-3 ">
-            <input type="checkbox" className="h-4 w-4 mr-1" />
-            <span className="block text-sm font-medium text-gray-500 ">
-              Accept Terms & Conditions.
-              <span className="text-blue-500 cursor-pointer"> Read Policy</span>
-            </span>
-          </div> */}
           <hr className="mb-3" />
           <label className="block mb-3 font-bold">
             <input
-              type="button"
-              value="Create account"
+              type="submit"
+              value={user?.loading === true ? "Loading..." : "Create account"}
               className="btn-primary"
             />
           </label>

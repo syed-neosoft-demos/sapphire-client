@@ -27,8 +27,6 @@ const Login = () => {
       }
     },
   });
-  console.log("formik :>> ", formik);
-  console.log("user :>> ", user);
   return (
     <AuthLayout>
       <div className="w-11/12 md:w-2/3 bg-white shadow-2xl p-6 rounded-lg">
