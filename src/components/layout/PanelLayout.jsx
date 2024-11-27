@@ -1,5 +1,13 @@
 import Menu from "@/components/custom/Menu";
-import Footer from "../custom/Footer";
+import Footer from "@/components/custom/Footer";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+
+import Profile from "@/components/custom/Profile";
 
 // eslint-disable-next-line react/prop-types
 const PanelLayout = ({ children }) => {
@@ -9,7 +17,21 @@ const PanelLayout = ({ children }) => {
         <div className="pl-4">
           <h3 className="font-extrabold text-2xl primary-radiant">ABC Cafe</h3>
         </div>
-        <div className="pr-4">Menu</div>
+        <div className="pr-4">
+          <Popover>
+            <PopoverTrigger>
+              <Avatar>
+                <AvatarImage src="https://github.com/shadcn.png" />
+                <AvatarFallback>CN</AvatarFallback>
+              </Avatar>
+            </PopoverTrigger>
+            <PopoverContent>
+              <div>
+                <Profile />
+              </div>
+            </PopoverContent>
+          </Popover>
+        </div>
       </div>
       <div className="flex items-start">
         <div className="border-r h-screen border-gray-200 w-56 p-2 sticky top-0 hidden sm:block">

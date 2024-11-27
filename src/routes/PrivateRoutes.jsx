@@ -2,6 +2,7 @@ import { Suspense, lazy } from "react";
 import { Navigate, Route, Routes } from "react-router";
 
 const Home = lazy(() => import("@/screen/panel/Home"));
+const Claim = lazy(() => import("@/screen/panel/ClaimForm"));
 const Page404 = lazy(() => import("@/screen/error/NotFound"));
 
 const PrivateRoutes = () => {
@@ -12,6 +13,14 @@ const PrivateRoutes = () => {
         element={
           <Suspense fallback={<>Loading...</>}>
             <Home />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/claim"
+        element={
+          <Suspense fallback={<>Loading...</>}>
+            <Claim />
           </Suspense>
         }
       />

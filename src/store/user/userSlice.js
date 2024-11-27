@@ -11,12 +11,13 @@ const initialState = {
   error: null,
 };
 
-const authSlice = createSlice({
-  name: "auth-slice",
+const userSlice = createSlice({
+  name: "user-slice",
   initialState,
   reducers: {
     logout: (state, action) => {
       state.auth = action.payload;
+      state.user = action.payload;
     },
     setLoading: (state, action) => {
       state.loading = action.payload;
@@ -33,10 +34,8 @@ const authSlice = createSlice({
       })
       .addCase(userLogin.fulfilled, (state, action) => {
         state.loading = false;
-        state.auth = {
-          accessToken: action.payload?.data?.accessToken,
-          refreshToken: action.payload?.data?.refreshToken,
-        };
+        console.log("action :>> ", action.payload?.data);
+        state.auth = action.payload?.data;
       })
       .addCase(userLogin.rejected, (state, action) => {
         state.loading = false;
@@ -45,5 +44,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { logout, setLoading, setError } = authSlice.actions;
-export default authSlice.reducer;
+export const { logout, setLoading, setError } = userSlice.actions;
+export default userSlice.reducer;

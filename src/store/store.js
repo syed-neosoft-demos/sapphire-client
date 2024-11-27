@@ -8,7 +8,7 @@ import claimReducer from "./claims/userSlice";
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["auth-slice", "user-slice"], // SPECIFY WHICH REDUCERS TO PERSIST
+  whitelist: ["user-slice", "claim-slice"], // SPECIFY WHICH REDUCERS TO PERSIST
 };
 
 const rootReducer = combineReducers({
