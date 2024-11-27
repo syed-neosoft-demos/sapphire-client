@@ -1,8 +1,8 @@
 import { Suspense, lazy } from "react";
 import { Navigate, Route, Routes } from "react-router";
 
-const Home = lazy(() => import("../screen/panel/Home"));
-const Page404 = lazy(() => import("../screen/error/NotFound"));
+const Home = lazy(() => import("@/screen/panel/Home"));
+const Page404 = lazy(() => import("@/screen/error/NotFound"));
 
 const PrivateRoutes = () => {
   return (
@@ -15,7 +15,6 @@ const PrivateRoutes = () => {
           </Suspense>
         }
       />
-
       <Route
         path="/404"
         element={

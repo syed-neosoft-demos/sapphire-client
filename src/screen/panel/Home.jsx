@@ -1,9 +1,14 @@
-const Home = () => {
+import PanelLayout from "@/components/layout/PanelLayout";
+import TopCard from "@/components/custom/Card";
+import Activity from "@/components/custom/Activity";
+
+const Dashboard = () => {
   return (
-    <div>
-      <h1>Hello Home Page</h1>
-    </div>
+    <PanelLayout>
+      <TopCard />
+      <Activity />
+    </PanelLayout>
   );
 };
 
-export default Home;
+export default Dashboard;
