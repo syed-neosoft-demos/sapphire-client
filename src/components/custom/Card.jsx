@@ -1,4 +1,8 @@
+import { useSelector } from "react-redux";
+
 const OrderCard = () => {
+  const { claim } = useSelector((store) => store);
+  console.log("claim PPP ", claim);
   return (
     <div>
       <h1 className="text-3xl font-bold secondary-radiant">Dashboard</h1>
@@ -9,7 +13,9 @@ const OrderCard = () => {
         <h3 className="mb-2 secondary-radiant">Claim Status</h3>
         <div className="flex gap-5 flex-wrap justify-between">
           <div className="border border-l-4 border-l-orange-400 rounded-lg grow w-60 p-4">
-            <h3 className="text-2xl text-orange-400 font-bold p-2">0</h3>
+            <h3 className="text-2xl text-orange-400 font-bold p-2">
+              {claim?.dashboardCounts?.totalClaim ?? 0}
+            </h3>
             <h4 className="text-lg text-gray-600 font-bold">Total</h4>
             <p className="text-sm text-gray-600 font-bold">Claims</p>
           </div>

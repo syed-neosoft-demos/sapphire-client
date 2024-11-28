@@ -80,6 +80,34 @@ export const userApi = {
     );
     return response.json();
   },
+  getClaim: async (pageNumber) => {
+    const response = await fetch(
+      `${
+        import.meta.env.VITE_SERVER_BASE_URL
+      }/claim/get-claim?pageNumber=${pageNumber}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${sessionStorage.getItem("access_token")}`,
+        },
+      }
+    );
+    return response.json();
+  },
+  getCounts: async () => {
+    const response = await fetch(
+      `${import.meta.env.VITE_SERVER_BASE_URL}/claim/get-counts`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${sessionStorage.getItem("access_token")}`,
+        },
+      }
+    );
+    return response.json();
+  },
 };
 
 export const getUser = createAsyncThunk(
@@ -139,6 +167,27 @@ export const createClaim = createAsyncThunk(
   async (payload, { rejectWithValue }) => {
     try {
       return await userApi.claim(payload);
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+export const getClaim = createAsyncThunk(
+  "user/getClaim",
+  async (pageNumber, { rejectWithValue }) => {
+    try {
+      return await userApi.getClaim(pageNumber);
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+export const getCounts = createAsyncThunk(
+  "user/getCounts",
+  async (_, { rejectWithValue }) => {
+    try {
+      return await userApi.getCounts();
     } catch (error) {
       return rejectWithValue(error.message);
     }

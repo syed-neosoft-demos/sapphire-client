@@ -51,6 +51,7 @@ const ClaimForm = () => {
 
   const handleFileUpload = async (event) => {
     try {
+      toast("Bill is uploading on cloud...");
       const file = event.target.files[0];
       const formdata = new FormData();
       formdata.append("file", file);

@@ -1,10 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getCategory, getLocation, getUser } from "./claimApi";
+import { getCategory, getClaim, getCounts, getLocation } from "./claimApi";
 
 const initialState = {
   user: null,
   category: null,
   location: null,
+  claims: {},
+  dashboardCounts: {},
   loading: false,
   error: null,
 };
@@ -25,15 +27,15 @@ const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getUser.pending, (state) => {
+      .addCase(getClaim.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(getUser.fulfilled, (state, action) => {
+      .addCase(getClaim.fulfilled, (state, action) => {
         state.loading = false;
-        state.user = action.payload?.data;
+        state.claims = action.payload?.data?.claim;
       })
-      .addCase(getUser.rejected, (state, action) => {
+      .addCase(getClaim.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })
@@ -58,6 +60,18 @@ const userSlice = createSlice({
         state.category = action.payload?.data?.category?.rows;
       })
       .addCase(getCategory.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(getCounts.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getCounts.fulfilled, (state, action) => {
+        state.loading = false;
+        state.dashboardCounts = action.payload?.data?.count;
+      })
+      .addCase(getCounts.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });
