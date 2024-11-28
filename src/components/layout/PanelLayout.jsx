@@ -21,7 +21,7 @@ const PanelLayout = ({ children }) => {
           <Popover>
             <PopoverTrigger>
               <Avatar>
-                <AvatarImage src="https://github.com/shadcn.png" />
+                <AvatarImage src="https://avatar.iran.liara.run/public" />
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
             </PopoverTrigger>

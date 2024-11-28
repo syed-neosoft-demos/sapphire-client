@@ -1,8 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getUser } from "./userApi";
+import { getCategory, getLocation, getUser } from "./claimApi";
 
 const initialState = {
   user: null,
+  category: null,
+  location: null,
   loading: false,
   error: null,
 };
@@ -32,6 +34,30 @@ const userSlice = createSlice({
         state.user = action.payload?.data;
       })
       .addCase(getUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(getLocation.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getLocation.fulfilled, (state, action) => {
+        state.loading = false;
+        state.location = action.payload?.data?.location?.rows;
+      })
+      .addCase(getLocation.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(getCategory.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getCategory.fulfilled, (state, action) => {
+        state.loading = false;
+        state.category = action.payload?.data?.category?.rows;
+      })
+      .addCase(getCategory.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });
