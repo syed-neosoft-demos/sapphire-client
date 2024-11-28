@@ -84,7 +84,6 @@ const ClaimForm = () => {
         return;
       }
       const decoded = await jwtDecode(sessionStorage.getItem("access_token"));
-      console.log("decoded :>> ", decoded);
       const res = await dispatch(
         createClaim({ ...values, bill_url: url, employee_id: decoded?.id })
       );
@@ -146,7 +145,7 @@ const ClaimForm = () => {
                       type="date"
                       placeholder="Enter code"
                       className="form-input"
-                      min={new Date().toISOString().split("T")[0]}
+                      max={new Date().toISOString().split("T")[0]}
                       name="expense_date"
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}

@@ -1,5 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getCategory, getClaim, getCounts, getLocation } from "./claimApi";
+import {
+  createClaim,
+  getCategory,
+  getClaim,
+  getCounts,
+  getLocation,
+} from "./claimApi";
 
 const initialState = {
   user: null,
@@ -72,6 +78,17 @@ const userSlice = createSlice({
         state.dashboardCounts = action.payload?.data?.count;
       })
       .addCase(getCounts.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(createClaim.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(createClaim.fulfilled, (state) => {
+        state.loading = false;
+      })
+      .addCase(createClaim.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });

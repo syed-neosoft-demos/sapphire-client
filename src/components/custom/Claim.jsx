@@ -43,9 +43,11 @@ const ClaimList = () => {
                     >
                       <td className="px-4 py-2">{el.claim_amount}</td>
                       <td className="px-4 py-2">{el.remark}</td>
-                      <td className="px-4 py-2">{el.createdAt}</td>
+                      <td className="px-4 py-2">
+                        {el.createdAt?.substring(0, 10)}
+                      </td>
                       <td className="px-4 py-2">{el.expense_date}</td>
-                      <td className="px-4 py-2">{el.location}</td>
+                      <td className="px-4 py-2">{el.location?.name}</td>
                       <td className="px-4 py-2 text-center space-x-2">
                         <Button variant="secondary" size="sm">
                           View Bill

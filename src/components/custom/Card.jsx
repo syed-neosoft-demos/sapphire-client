@@ -2,7 +2,6 @@ import { useSelector } from "react-redux";
 
 const OrderCard = () => {
   const { claim } = useSelector((store) => store);
-  console.log("claim PPP ", claim);
   return (
     <div>
       <h1 className="text-3xl font-bold secondary-radiant">Dashboard</h1>
